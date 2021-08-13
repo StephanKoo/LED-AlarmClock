@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
-#use "python3 STKXXX.py" without " to start on LX Terminal
+#use "python3 MasterProgram.py" without " to start on LX Terminal
 import requests
 import json
 from requests.structures import CaseInsensitiveDict
