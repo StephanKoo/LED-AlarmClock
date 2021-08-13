@@ -84,6 +84,7 @@ def CPUTemp():
     cpu_temp = gz.CPUTemperature().temperature
     return str(round(cpu_temp, 1))
 
+# UHr blinkt, um Mensch aus dem Bett zu schmeißen
 #flashDuration: min 2 / max 59
 #minBrightness: 1
 #maxBrightness: 255 #Step 16
@@ -104,14 +105,15 @@ if __name__ == "__main__": # d.h. Hauptprogramm
     lastHour = 0
     #latitude = "52.526630" #Berlin Spandau
     #longitude = "13.148786" #Berlin Spandau
-    latitude = "53.613147" # Hamburg GB
-    longitude = "9.976744" # Hamburg GB
+    latitude = "53.613147" # Hamburg Großborstel
+    longitude = "9.976744" # Hamburg Großborstel
     sunrise = getSunData(latitude, longitude, "rise")
-    sunset = getSunData(latitude, longitude, "set")
+    sunset =  getSunData(latitude, longitude, "set")
     contrastDay = 100
     contrastNight = 1
     selftest = False
    
+    # Taster definieren
     # GPIO Setup
     # Pin Definitons:
     touchSwitch = 17 # BCM pin 17 
@@ -143,7 +145,7 @@ if __name__ == "__main__": # d.h. Hauptprogramm
                 print(str(setSwitch1))
                 
                
-            if int(str(str(microsecond).zfill(6)[0:1])) == 0:
+            if int(str(str(microsecond).zfill(6)[0:1])) == 0: # zfill: 1/10-Sekunde == 0
                 
                 if setSwitch1 == True:
                     if setSwitch1Old == False:
@@ -164,7 +166,7 @@ if __name__ == "__main__": # d.h. Hauptprogramm
                 # set sunrise and sunset to new time
                 if hour == "0" and second == "23":
                     sunrise = getSunData(latitude, longitude, "rise")
-                    sunset = getSunData(latitude, longitude, "set")
+                    sunset =  getSunData(latitude, longitude, "set")
                 
                 # 
                 if int(second) == 5 and isDayTime(sunrise, sunset): #
@@ -178,7 +180,7 @@ if __name__ == "__main__": # d.h. Hauptprogramm
                     
                 
                 if int(second) == 45 and isDayTime(sunrise, sunset):
-                    Clock.ShowText("CPU temp: " + str(CPUTemp()) + " C")
+                    Clock.ShowText("CPU temp: " + str(CPUTemp()) + " C") # Lauftext ausgeben; Uhrzeit ausgeben ist in er baseClock drin
                     
                 
                 # show date at daytime
