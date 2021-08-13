@@ -1,1 +1,1 @@
-# LED-Wecker
+ein LED-Wecker mit dem Raspberry-PI
