@@ -45,13 +45,13 @@ class BaseClock(threading.Thread):
         else:
             return 1
             
-    def __init__(self):
+    def __init__(self):  # __init__ ist der Konstruktor
         # Init Own Thread for Clock
-        threading.Thread.__init__(self)
+        threading.Thread.__init__(self)  # sich selber im Thread starten
         # Init LED Matrix
         serial = spi(port=0, device=0, gpio=noop())
-        self.device = max7219(serial, cascaded=4, block_orientation=90, blocks_arranged_in_reverse_order=True)
-        self.device.contrast(1)
+        self.device = max7219(serial, cascaded=4, block_orientation=90, blocks_arranged_in_reverse_order=True) # 7219 ist der Chip der Steuerung; cascade: Anzahl der 8x8-Kacheln
+        self.device.contrast(1)  # niedrigste Helligkeitsstufe
     
     def run(self):
         # Clock is running
@@ -152,11 +152,12 @@ class BaseClock(threading.Thread):
                 time.sleep(0.5)
 
     def Show(self):
-        self.__ShowClock = True
+        self.__ShowClock = True   # __ShowClock: Clock ist nicht allgemein genug hier
 
     def Hide(self):
         self.__ShowClock = False
-        
+
+    # Lauftext
     def ShowText(self, text):
         # Replace special characters, whch are not available in font
         chars = {'ö':'oe','ä':'ae','ü':'ue','Ö':'Oe','Ä':'Ae','Ü':'ue','ß':'ss'}
@@ -181,7 +182,7 @@ class BaseClock(threading.Thread):
     
     # Clock.DemoBrightness()
     def DemoBrightness(self):
-        tempContrast = random.randrange(0,255,1)
+        tempContrast : int = random.randrange(0,255,1)
         print("TempContrast:=" + str(tempContrast))
         self.changeContrast(tempContrast)
 

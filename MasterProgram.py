@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
-#use "python3 STKXXX.py" without " to start on LX Terminal
+#use "python3 MasterProgram.py" without " to start on LX Terminal
 import requests
 import json
 from requests.structures import CaseInsensitiveDict
@@ -9,8 +9,6 @@ from datetime import datetime
 import BaseClock
 import gpiozero as gz
 import RPi.GPIO as GPIO
-
-# dies ist ein Kommenta 
 
 def ReadYrTemp(lat, lon):
     #with open("/home/pi/Python/YrData.txt", "r") as yrdata:
@@ -97,7 +95,7 @@ def FlashBrightness(flashDuration, minBrightness, maxBrightness):
     else:
         Clock.changeContrast(minBrightness)
     
-if __name__ == "__main__":
+if __name__ == "__main__": # d.h. Hauptprogramm
     #set default values
     WeekdayLong=["Sonntag ", "Montag ", "Dienstag ", "Mittwoch ", "Donnerstag ", "Freitag ", "Samstag "]
     WeekdayShort=["So", "Mo", "Di", "Mi", "Do", "Fr", "Sa"]
