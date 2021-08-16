@@ -209,7 +209,7 @@ if __name__ == "__main__":
                 
             time.sleep(1)
     except KeyboardInterrupt:
-        pass    
+        pass # = NOP, da hier ja irgendein Befehl stehen muss
     Uhr.close()
     print("Stop der Uhr angefordert")
     Uhr.join()
