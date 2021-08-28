@@ -51,7 +51,7 @@ class BaseClock(threading.Thread):
         threading.Thread.__init__(self)  # sich selber im Thread starten
         # Init LED Matrix
         serial = spi(port=0, device=0, gpio=noop())
-        self.device = max7219(serial, cascaded=4, block_orientation=90, blocks_arranged_in_reverse_order=True) # 7219 ist der Chip der Steuerung; cascade: Anzahl der 8x8-Kacheln
+        self.device = max7219(serial, cascaded=4, block_orientation=-90, blocks_arranged_in_reverse_order=False) # 7219 ist der Chip der Steuerung; cascade: Anzahl der 8x8-Kacheln
         self.device.contrast(1)  # niedrigste Helligkeitsstufe
     
     def run(self):

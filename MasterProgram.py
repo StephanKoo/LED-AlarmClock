@@ -103,10 +103,10 @@ if __name__ == "__main__": # d.h. Hauptprogramm
     prevTempData = ""
     curTempData = "" 
     lastHour = 0
-    #latitude = "52.526630" #Berlin Spandau
-    #longitude = "13.148786" #Berlin Spandau
-    latitude = "53.613147" # Hamburg Großborstel
-    longitude = "9.976744" # Hamburg Großborstel
+    latitude = "52.526630" #Berlin Spandau
+    longitude = "13.148786" #Berlin Spandau
+    #latitude = "53.613147" # Hamburg Großborstel
+    #longitude = "9.976744" # Hamburg Großborstel
     sunrise = getSunData(latitude, longitude, "rise")
     sunset =  getSunData(latitude, longitude, "set")
     contrastDay = 100
@@ -116,20 +116,19 @@ if __name__ == "__main__": # d.h. Hauptprogramm
     # Taster definieren
     # GPIO Setup
     # Pin Definitons:
-    touchSwitch = 17 # BCM pin 17 
+    touchSwitch = 17 # GPIO 17 = Pin 11 for mode BCM
     # Pin Setup:GeneratorExit
-    GPIO.setmode(GPIO.BCM) # BCM pin-numbering scheme
-    GPIO.setup(touchSwitch, GPIO.OUT) # Button pin set as input w/ pull-up
+    GPIO.setmode(GPIO.BCM) # BCM pin-numbering scheme / Board-Mode
+    GPIO.setup(touchSwitch, GPIO.OUT) # Button pin set as input w/ pull-up # OUT = Die Daten kommen AUS dem Schalter
     setSwitch1 = False
     setSwitch1Old = setSwitch1
-
 
     # Main for Test
     Clock = BaseClock.BaseClock() 
     Clock.start()
     print("Uhr gestartet")
     print("Press Ctrl-C to quit.")
-    
+
     try:
         while True:
             date = datetime.now().strftime('%d.%m.') #old '%d.%m.%Y'
@@ -143,7 +142,8 @@ if __name__ == "__main__": # d.h. Hauptprogramm
             if GPIO.input(touchSwitch): # button is released
                 setSwitch1 = True
                 print(str(setSwitch1))
-                
+
+            # Clock.changeContrast((int(second) % 2) * 100)
                
             if int(str(str(microsecond).zfill(6)[0:1])) == 0: # zfill: 1/10-Sekunde == 0
                 
@@ -169,14 +169,14 @@ if __name__ == "__main__": # d.h. Hauptprogramm
                     sunset =  getSunData(latitude, longitude, "set")
                 
                 # 
-                if int(second) == 5 and isDayTime(sunrise, sunset): #
+                if (int(second) == 5 or int(second) == 35) :# and isDayTime(sunrise, sunset):
                     # update Tempratures and show Tempratures at day time  
                     if hour != lastHour or curTempData == "":
                         lastHour = hour
                         curTempData = ReadYrTemp(latitude, longitude)
                         
-                    elif isDayTime(sunrise, sunset) == True:
-                        Clock.ShowText(curTempData)
+
+                    Clock.ShowText(curTempData)
                     
                 
                 if int(second) == 45 and isDayTime(sunrise, sunset):
