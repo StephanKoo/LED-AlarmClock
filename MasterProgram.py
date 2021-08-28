@@ -10,6 +10,8 @@ import BaseClock
 import gpiozero as gz
 import RPi.GPIO as GPIO
 
+import socket
+
 def ReadYrTemp(lat, lon):
     #with open("/home/pi/Python/YrData.txt", "r") as yrdata:
     #    yrd = yrdata.read()
@@ -134,7 +136,8 @@ if __name__ == "__main__": # d.h. Hauptprogramm
             date = datetime.now().strftime('%d.%m.') #old '%d.%m.%Y'
             day = datetime.now().strftime('%w')
             hour = datetime.now().strftime('%h')
-            second = datetime.now().strftime('%S')
+            secondS = datetime.now().strftime('%S')
+            second  = int(secondS)
             
             microsecond = datetime.now().microsecond
             #print(str(microsecond)[0:1])
@@ -164,34 +167,35 @@ if __name__ == "__main__": # d.h. Hauptprogramm
                 #    Clock.changeContrast(contrastNight)
                 
                 # set sunrise and sunset to new time
-                if hour == "0" and second == "23":
+                if hour == "0" and second == 23:
                     sunrise = getSunData(latitude, longitude, "rise")
                     sunset =  getSunData(latitude, longitude, "set")
                 
                 # 
-                if (int(second) == 5 or int(second) == 35) :# and isDayTime(sunrise, sunset):
+                if (second == 5) :# and isDayTime(sunrise, sunset):
                     # update Tempratures and show Tempratures at day time  
                     if hour != lastHour or curTempData == "":
                         lastHour = hour
                         curTempData = ReadYrTemp(latitude, longitude)
-                        
-
                     Clock.ShowText(curTempData)
-                    
                 
-                if int(second) == 45 and isDayTime(sunrise, sunset):
+                if (second == 20) :
+                    s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+                    s.connect(('192.168.0.1', 1))
+                    ipAddress = s.getsockname()[0]
+                    Clock.ShowText("IP: " + ipAddress)
+                
+                if second == 45 and isDayTime(sunrise, sunset):
                     Clock.ShowText("CPU temp: " + str(CPUTemp()) + " C") # Lauftext ausgeben; Uhrzeit ausgeben ist in er baseClock drin
                     
                 
                 # show date at daytime
-                if int(second)== 30 and isDayTime(sunrise, sunset): #
+                if second== 30 and isDayTime(sunrise, sunset): #
                     # show Date
                     Clock.ShowText(WeekdayShort[int(day)] + " " + date)
                 
                 time.sleep(0.1)
                 setSwitch1 = False
-                
-            
             
             
     except KeyboardInterrupt:
