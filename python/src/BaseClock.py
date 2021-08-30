@@ -5,6 +5,8 @@
 # Inspired by luma.led_matrix/examples/silly_clock.py by ttsiodras
 # https://github.com/rm-hull/luma.led_matrix/blob/master/examples/silly_clock.py
 
+import Clock
+
 import threading
 import time
 import random
@@ -16,7 +18,7 @@ from luma.core.render import canvas
 from luma.core.legacy import text, show_message # da werden wohl Funktionen importiert
 from luma.core.legacy.font import proportional, CP437_FONT, TINY_FONT
 
-class BaseClock(threading.Thread):
+class BaseClock(threading.Thread, Clock.Clock):
 
     def __DrawNumber(self, draw, StringOld, StringNew, PosOld, PosNew, Iterator):
         # Draws and animates Number - Iterator has to be increased from 0 (old String) to 8 (NewString)
@@ -187,6 +189,17 @@ class BaseClock(threading.Thread):
         print("TempContrast:=" + str(tempContrast))
         self.changeContrast(tempContrast)
 
+    # UHr blinkt, um Mensch aus dem Bett zu schmeißen
+    #flashDuration: min 2 / max 59
+    #minBrightness: 1
+    #maxBrightness: 255 #Step 16
+    #Wecker klingelt ohne Snozze: Idee FlashBrightness(2, 1, 255)
+    def FlashBrightness(self, flashDuration, minBrightness, maxBrightness):
+        CurSecond = datetime.now().strftime('%S')
+        if int(CurSecond) % flashDuration == 0:
+            self.changeContrast(maxBrightness)
+        else:
+            self.changeContrast(minBrightness)
     
 if __name__ == "__main__":
     Wochentag=["Sonntag ", "Montag ", "Dienstag ", "Mittwoch ", "Donnerstag ", "Freitag ", "Samstag "]

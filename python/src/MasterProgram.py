@@ -11,17 +11,6 @@ import RPi.GPIO as GPIO
 
 import Util
 
-# UHr blinkt, um Mensch aus dem Bett zu schmeißen
-#flashDuration: min 2 / max 59
-#minBrightness: 1
-#maxBrightness: 255 #Step 16
-#Wecker klingelt ohne Snozze: Idee FlashBrightness(2, 1, 255)
-def FlashBrightness(flashDuration, minBrightness, maxBrightness):
-    CurSecond = datetime.now().strftime('%S')
-    if int(CurSecond) % flashDuration == 0:
-        Clock.changeContrast(maxBrightness)
-    else:
-        Clock.changeContrast(minBrightness)
     
 if __name__ == "__main__": # d.h. Hauptprogramm
     #set default values
@@ -51,8 +40,8 @@ if __name__ == "__main__": # d.h. Hauptprogramm
     setSwitch1Old = setSwitch1
 
     # Main for Test
-    Clock = BaseClock.BaseClock() 
-    Clock.start()
+    clock = BaseClock.BaseClock() 
+    clock.start()
     print("Uhr gestartet")
     print("Press Ctrl-C to quit.")
 
@@ -71,25 +60,25 @@ if __name__ == "__main__": # d.h. Hauptprogramm
                 setSwitch1 = True
                 print(str(setSwitch1))
 
-            # Clock.changeContrast((int(second) % 2) * 100)
+            # clock.changeContrast((int(second) % 2) * 100)
                
             if int(str(str(microsecond).zfill(6)[0:1])) == 0: # zfill: 1/10-Sekunde == 0
                 
                 if setSwitch1 == True:
                     if setSwitch1Old == False:
-                        Clock.changeContrast(255)
+                        clock.changeContrast(255)
                         setSwitch1Old = setSwitch1
                         setSwitch1 = False
                     else: #setSwitch1Old == True
-                        Clock.changeContrast(16)
+                        clock.changeContrast(16)
                         setSwitch1Old = False
                         setSwitch1 = False
                         
                 # Day / Night Mode
                 #if isDayTime(sunrise, sunset) == True:
-                #    Clock.changeContrast(contrastDay)
+                #    clock.changeContrast(contrastDay)
                 #else:
-                #    Clock.changeContrast(contrastNight)
+                #    clock.changeContrast(contrastNight)
                 
                 # set sunrise and sunset to new time
                 if hour == "0" and second == 23:
@@ -102,20 +91,20 @@ if __name__ == "__main__": # d.h. Hauptprogramm
                     if hour != lastHour or curTempData == "":
                         lastHour = hour
                         curTempData = Util.ReadYrTemp(latitude, longitude)
-                    Clock.ShowText(curTempData)
+                    clock.ShowText(curTempData)
                 
                 if (second == 20) :
                     ipInfo = Util.getIpInfo();
-                    Clock.ShowText(ipInfo)
+                    clock.ShowText(ipInfo)
                 
                 if second == 45 and Util.isDayTime(sunrise, sunset):
-                    Clock.ShowText("CPU temp: " + str(Util.CPUTemp()) + " C") # Lauftext ausgeben; Uhrzeit ausgeben ist in er baseClock drin
+                    clock.ShowText("CPU temp: " + str(Util.CPUTemp()) + " C") # Lauftext ausgeben; Uhrzeit ausgeben ist in er baseClock drin
                     
                 
                 # show date at daytime
                 if second == 30 and Util.isDayTime(sunrise, sunset): #
                     # show Date
-                    Clock.ShowText(WeekdayShort[int(day)] + " " + date)
+                    clock.ShowText(WeekdayShort[int(day)] + " " + date)
                 
                 time.sleep(0.1)
                 setSwitch1 = False
@@ -124,7 +113,7 @@ if __name__ == "__main__": # d.h. Hauptprogramm
     except KeyboardInterrupt:
         pass
     GPIO.cleanup() # cleanup all GPIO
-    Clock.close()
+    clock.close()
     print("Stop der Uhr angefordert")
-    Clock.join()
+    clock.join()
     print("Uhr gestoppt")
