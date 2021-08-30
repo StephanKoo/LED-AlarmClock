@@ -6,8 +6,7 @@ import time
 from datetime import datetime
 
 import BaseClock
-import gpiozero as gz
-import RPi.GPIO as GPIO
+import RasperryPi
 
 import Util
 
@@ -29,16 +28,8 @@ if __name__ == "__main__": # d.h. Hauptprogramm
     contrastNight = 1
     selftest = False
    
-    # Taster definieren
-    # GPIO Setup
-    # Pin Definitons:
-    touchSwitch = 17 # GPIO 17 = Pin 11 for mode BCM
-    # Pin Setup:GeneratorExit
-    GPIO.setmode(GPIO.BCM) # BCM pin-numbering scheme / Board-Mode
-    GPIO.setup(touchSwitch, GPIO.OUT) # Button pin set as input w/ pull-up # OUT = Die Daten kommen AUS dem Schalter
-    setSwitch1 = False
-    setSwitch1Old = setSwitch1
-
+    button1 = RasperryPi.RaspyButton();
+   
     # Main for Test
     clock = BaseClock.BaseClock() 
     clock.start()
@@ -55,25 +46,19 @@ if __name__ == "__main__": # d.h. Hauptprogramm
             
             microsecond = datetime.now().microsecond
             #print(str(microsecond)[0:1])
-            
-            if GPIO.input(touchSwitch): # button is released
-                setSwitch1 = True
-                print(str(setSwitch1))
+    
+            button1.updateState_1()         
 
             # clock.changeContrast((int(second) % 2) * 100)
                
             if int(str(str(microsecond).zfill(6)[0:1])) == 0: # zfill: 1/10-Sekunde == 0
                 
-                if setSwitch1 == True:
-                    if setSwitch1Old == False:
-                        clock.changeContrast(255)
-                        setSwitch1Old = setSwitch1
-                        setSwitch1 = False
-                    else: #setSwitch1Old == True
-                        clock.changeContrast(16)
-                        setSwitch1Old = False
-                        setSwitch1 = False
-                        
+                c = button1.updateState_2()
+                if c == True:
+                    clock.changeContrast(255)
+                elif c == False:
+                    clock.changeContrast(16)
+                               
                 # Day / Night Mode
                 #if isDayTime(sunrise, sunset) == True:
                 #    clock.changeContrast(contrastDay)
@@ -112,7 +97,7 @@ if __name__ == "__main__": # d.h. Hauptprogramm
             
     except KeyboardInterrupt:
         pass
-    GPIO.cleanup() # cleanup all GPIO
+    button1.close()
     clock.close()
     print("Stop der Uhr angefordert")
     clock.join()
