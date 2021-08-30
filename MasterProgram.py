@@ -10,7 +10,7 @@ import BaseClock
 import gpiozero as gz
 import RPi.GPIO as GPIO
 
-import socket
+import util
 
 def ReadYrTemp(lat, lon):
     #with open("/home/pi/Python/YrData.txt", "r") as yrdata:
@@ -180,17 +180,15 @@ if __name__ == "__main__": # d.h. Hauptprogramm
                     Clock.ShowText(curTempData)
                 
                 if (second == 20) :
-                    s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-                    s.connect(('192.168.0.1', 1))
-                    ipAddress = s.getsockname()[0]
-                    Clock.ShowText("IP: " + ipAddress)
+                    ipInfo = getIpInfo();
+                    Clock.ShowText(ipInfo)
                 
                 if second == 45 and isDayTime(sunrise, sunset):
                     Clock.ShowText("CPU temp: " + str(CPUTemp()) + " C") # Lauftext ausgeben; Uhrzeit ausgeben ist in er baseClock drin
                     
                 
                 # show date at daytime
-                if second== 30 and isDayTime(sunrise, sunset): #
+                if second == 30 and isDayTime(sunrise, sunset): #
                     # show Date
                     Clock.ShowText(WeekdayShort[int(day)] + " " + date)
                 
