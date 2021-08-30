@@ -1,90 +1,15 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 #use "python3 MasterProgram.py" without " to start on LX Terminal
-import requests
-import json
-from requests.structures import CaseInsensitiveDict
+
 import time
 from datetime import datetime
+
 import BaseClock
 import gpiozero as gz
 import RPi.GPIO as GPIO
 
 import Util
-
-def ReadYrTemp(lat, lon):
-    #with open("/home/pi/Python/YrData.txt", "r") as yrdata:
-    #    yrd = yrdata.read()
-    #jdata = json.loads(yrd)
-    headers = CaseInsensitiveDict()
-    headers["Content-Type"] = "application/json"
-    headers["User-agent"] = "My User Agent 1.0"
-
-    url = "https://api.met.no/weatherapi/locationforecast/2.0/compact?lat="+lat+"&lon="+lon+""
-    resp = requests.get(url, headers=headers)
-    #print(resp.text)
-    jdata = json.loads(resp.text)
-    
-    maxTemp = -100
-    minTemp = 100
-
-    for i in range(0, 18):
-        thisTemp = jdata['properties']['timeseries'][i]['data']['instant']['details']['air_temperature']
-        
-        if i == 0:
-            curTemp = thisTemp
-            
-        if thisTemp > maxTemp:
-            maxTemp = thisTemp
-        
-        if thisTemp < minTemp:
-            minTemp = thisTemp
-    retTemp = "Temp min/max " + str(minTemp) + "/" + str(maxTemp) + " C"
-    print("retTemp: " + retTemp)
-    return retTemp
-
-#lat = 0.000000
-#lng = 9.999999
-#type = rise or set
-def getSunData(lat, lng, type):
-    url = "https://api.sunrise-sunset.org/json?lat="+str(lat)+"&lng="+str(lng)+"&date=today&formatted=0"
-    headers = CaseInsensitiveDict()
-    headers["Content-Type"] = "application/json"
-    headers["User-agent"] = "My User Agent 1.0"
-    resp = requests.get(url, headers=headers)
-    jdata = json.loads(resp.text)
-    res = ""
-    
-    if type == "rise" :
-        res = jdata['results']['sunrise']
-        res = res[0:19]
-    elif type == "set":
-        res = jdata['results']['sunset']
-        res = res[0:19]
-    #print(res)
-    
-    if res == "":
-        return ""
-    else:
-        return datetime_from_utc_to_local(res)
-
-def datetime_from_utc_to_local(utc_datetime):
-    utc_datetime = datetime.strptime(utc_datetime, "%Y-%m-%dT%H:%M:%S")
-    now_timestamp = time.time()
-    offset = datetime.fromtimestamp(now_timestamp) - datetime.utcfromtimestamp(now_timestamp)
-    return utc_datetime + offset
-
-def isDayTime(sunrise, sunset):
-    hour = datetime.now().strftime('%h')
-    
-    if hour <= sunrise.strftime('%h') or hour >= sunset.strftime('%h'):
-        return False
-    else:
-        return True
-
-def CPUTemp():
-    cpu_temp = gz.CPUTemperature().temperature
-    return str(round(cpu_temp, 1))
 
 # UHr blinkt, um Mensch aus dem Bett zu schmeißen
 #flashDuration: min 2 / max 59
@@ -109,8 +34,8 @@ if __name__ == "__main__": # d.h. Hauptprogramm
     longitude = "13.148786" #Berlin Spandau
     #latitude = "53.613147" # Hamburg Großborstel
     #longitude = "9.976744" # Hamburg Großborstel
-    sunrise = getSunData(latitude, longitude, "rise")
-    sunset =  getSunData(latitude, longitude, "set")
+    sunrise = Util.getSunData(latitude, longitude, "rise")
+    sunset =  Util.getSunData(latitude, longitude, "set")
     contrastDay = 100
     contrastNight = 1
     selftest = False
@@ -168,27 +93,27 @@ if __name__ == "__main__": # d.h. Hauptprogramm
                 
                 # set sunrise and sunset to new time
                 if hour == "0" and second == 23:
-                    sunrise = getSunData(latitude, longitude, "rise")
-                    sunset =  getSunData(latitude, longitude, "set")
+                    sunrise = Util.getSunData(latitude, longitude, "rise")
+                    sunset =  Util.getSunData(latitude, longitude, "set")
                 
                 # 
                 if (second == 5) :# and isDayTime(sunrise, sunset):
                     # update Tempratures and show Tempratures at day time  
                     if hour != lastHour or curTempData == "":
                         lastHour = hour
-                        curTempData = ReadYrTemp(latitude, longitude)
+                        curTempData = Util.ReadYrTemp(latitude, longitude)
                     Clock.ShowText(curTempData)
                 
                 if (second == 20) :
                     ipInfo = Util.getIpInfo();
                     Clock.ShowText(ipInfo)
                 
-                if second == 45 and isDayTime(sunrise, sunset):
-                    Clock.ShowText("CPU temp: " + str(CPUTemp()) + " C") # Lauftext ausgeben; Uhrzeit ausgeben ist in er baseClock drin
+                if second == 45 and Util.isDayTime(sunrise, sunset):
+                    Clock.ShowText("CPU temp: " + str(Util.CPUTemp()) + " C") # Lauftext ausgeben; Uhrzeit ausgeben ist in er baseClock drin
                     
                 
                 # show date at daytime
-                if second == 30 and isDayTime(sunrise, sunset): #
+                if second == 30 and Util.isDayTime(sunrise, sunset): #
                     # show Date
                     Clock.ShowText(WeekdayShort[int(day)] + " " + date)
                 
