@@ -7,9 +7,9 @@ Created on 30.08.2021
 import abc
 import gpiozero as gz
 import RPi.GPIO as GPIO
-import RasperryPi.Button as Button
+import RasperryPi
 
-class RaspyButton(Button):
+class RaspyButton(RasperryPi.Button):
 
     # Taster definieren
     # GPIO Setup
