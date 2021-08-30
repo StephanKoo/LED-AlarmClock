@@ -10,7 +10,7 @@ import BaseClock
 import gpiozero as gz
 import RPi.GPIO as GPIO
 
-import util
+import Util
 
 def ReadYrTemp(lat, lon):
     #with open("/home/pi/Python/YrData.txt", "r") as yrdata:
@@ -180,7 +180,7 @@ if __name__ == "__main__": # d.h. Hauptprogramm
                     Clock.ShowText(curTempData)
                 
                 if (second == 20) :
-                    ipInfo = getIpInfo();
+                    ipInfo = Util.getIpInfo();
                     Clock.ShowText(ipInfo)
                 
                 if second == 45 and isDayTime(sunrise, sunset):
