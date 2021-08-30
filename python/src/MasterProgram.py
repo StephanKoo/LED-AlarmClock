@@ -102,4 +102,4 @@ def main(clock: Clock, button1: Button):
     print("Uhr gestoppt")
 
 if __name__ == "__main__": # d.h. Hauptprogramm
-    print("Entweder OnNonRaspi.py oder OnRaspi.py starten")
+    print("Entweder OnNonRaspi.py oder LedAlarmClock.py starten")

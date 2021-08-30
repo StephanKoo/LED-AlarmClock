@@ -204,7 +204,7 @@ class BaseClock(threading.Thread, Clock.Clock):
 if __name__ == "__main__":
     Wochentag=["Sonntag ", "Montag ", "Dienstag ", "Mittwoch ", "Donnerstag ", "Freitag ", "Samstag "]
 
-    # Main for Test
+    # LedAlarmClock for Test
     Uhr = BaseClock() 
     Uhr.start()
     
