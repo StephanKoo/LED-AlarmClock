@@ -16,10 +16,17 @@ class Clock(abc.ABC):
         Constructor
         '''
 
+    def start(self):
+        pass
+
     @abc.abstractclassmethod
     def ShowText(self, text):
         pass
 
 class DummyClock(Clock):
+    
+    def start(self):
+        pass
+
     def ShowText(self, text):
         print(text)

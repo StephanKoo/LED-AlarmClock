@@ -6,16 +6,14 @@ import time
 from datetime import datetime
 
 import Clock
-import BaseClock
-import RasperryPi
-import RasperryPiImpl
+from RasperryPi import Button
 
 import Util
 
 import sys
 from sys import argv
     
-if __name__ == "__main__": # d.h. Hauptprogramm
+def main(clock: Clock, button1: Button):
     #set default values
     WeekdayLong=["Sonntag ", "Montag ", "Dienstag ", "Mittwoch ", "Donnerstag ", "Freitag ", "Samstag "]
     WeekdayShort=["So", "Mo", "Di", "Mi", "Do", "Fr", "Sa"]
@@ -31,15 +29,6 @@ if __name__ == "__main__": # d.h. Hauptprogramm
     contrastDay = 100
     contrastNight = 1
     selftest = False
-    
-    if (len(argv) == 0):
-        button1 = RasperryPiImpl.RaspyButton();
-        clock = BaseClock.BaseClock()
-    elif (argv[0] == "--no-led"):
-        button1 = RasperryPi.DummyButton();
-        clock = Clock.DummyClock()
-    else:
-        print ("Parameter "+argv[0] +" nicht unterstützt. Entweder kein Parameter übergeben, oder --no-led")
 
     clock.start()
     print("Uhr gestartet")
@@ -111,3 +100,6 @@ if __name__ == "__main__": # d.h. Hauptprogramm
     print("Stop der Uhr angefordert")
     clock.join()
     print("Uhr gestoppt")
+
+if __name__ == "__main__": # d.h. Hauptprogramm
+    print("Entweder OnNonRaspi.py oder OnRaspi.py starten")
