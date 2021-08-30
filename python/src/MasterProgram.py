@@ -5,11 +5,15 @@
 import time
 from datetime import datetime
 
+import Clock
 import BaseClock
 import RasperryPi
+import RasperryPiImpl
 
 import Util
 
+import sys
+from sys import argv
     
 if __name__ == "__main__": # d.h. Hauptprogramm
     #set default values
@@ -27,11 +31,16 @@ if __name__ == "__main__": # d.h. Hauptprogramm
     contrastDay = 100
     contrastNight = 1
     selftest = False
-   
-    button1 = RasperryPi.RaspyButton();
-   
-    # Main for Test
-    clock = BaseClock.BaseClock() 
+    
+    if (len(argv) == 0):
+        button1 = RasperryPiImpl.RaspyButton();
+        clock = BaseClock.BaseClock()
+    elif (argv[0] == "--no-led"):
+        button1 = RasperryPi.DummyButton();
+        clock = Clock.DummyClock()
+    else:
+        print ("Parameter "+argv[0] +" nicht unterstützt. Entweder kein Parameter übergeben, oder --no-led")
+
     clock.start()
     print("Uhr gestartet")
     print("Press Ctrl-C to quit.")
