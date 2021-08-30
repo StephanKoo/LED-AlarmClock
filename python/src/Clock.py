@@ -16,11 +16,20 @@ class Clock(abc.ABC):
         Constructor
         '''
 
+    @abc.abstractclassmethod
     def start(self):
         pass
 
     @abc.abstractclassmethod
     def ShowText(self, text):
+        pass
+    
+    @abc.abstractclassmethod
+    def close(self):
+        pass
+
+    @abc.abstractclassmethod
+    def join(self):
         pass
 
 class DummyClock(Clock):
@@ -30,3 +39,9 @@ class DummyClock(Clock):
 
     def ShowText(self, text):
         print(text)
+    
+    def close(self):
+        pass
+
+    def join(self):
+        pass

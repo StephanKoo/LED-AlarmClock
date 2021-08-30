@@ -37,6 +37,6 @@ class RaspyButton(RasperryPi.Button):
                 self.setSwitch1 = False
                 return True;
         return None;
-    
+
     def close(self):
         GPIO.cleanup() # cleanup all GPIO
