@@ -72,21 +72,18 @@ def run():
                 #    sunset =  Util.getSunData(latitude, longitude, "set")
                 
                 # 
-                if (second == 5) :# and isDayTime(sunrise, sunset):
+                if (second == 5 or second == 6) :# and isDayTime(sunrise, sunset):
                     # update Tempratures and show Tempratures at day time  
                     if hour != lastHour or curTempData == "":
                         lastHour = hour
                         curTempData = Util.ReadYrTemp(latitude, longitude)
                     clock.ShowText(curTempData)
                 
-                if (second == 20) :
+                if (second == 25 or second == 26) :
                     ipInfo = Util.getIpInfo();
                     clock.ShowText(ipInfo)
                 
-                if (second == 30) :
-                    clock.ShowText(None)
-                
-                if (second == 45):# and Util.isDayTime(sunrise, sunset)):
+                if (second == 45 or second == 46):# and Util.isDayTime(sunrise, sunset)):
                     clock.ShowText("CPU temp: " + str(Util.CPUTemp()) + " C") # Lauftext ausgeben; Uhrzeit ausgeben ist in er baseClock drin
 
                 # show date at daytime
