@@ -52,7 +52,7 @@ def run():
                
             if int(str(str(microsecond).zfill(6)[0:1])) == 0: # zfill: 1/10-Sekunde == 0
                 
-                print("second="+secondS);
+                # print("second="+secondS);
                 
                 c = button1.updateState_2()
                 if c == True:
@@ -111,7 +111,7 @@ def closeFast():
         button1.close()
     if clock != None:
         clock.closeFast()
-        print("Schennel Stop der Uhr angefordert")
+        print("Schnell-Stop der Uhr angefordert")
         clock.join()
         print("Uhr gestoppt")
 
