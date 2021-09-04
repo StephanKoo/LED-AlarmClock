@@ -49,7 +49,7 @@ def ReadYrTemp(lat, lon):
             
             if thisTemp < minTemp:
                 minTemp = thisTemp
-        return "Wetter: min/max " + str(minTemp) + "/" + str(maxTemp) + " C"
+        return "Wetter: " + str(round(minTemp)) + "-" + str(round(maxTemp)) + " C"
     except:
         return None;
 
