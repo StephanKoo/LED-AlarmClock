@@ -107,7 +107,7 @@ class BaseClock(threading.Thread, Clock.Clock):
                         elif MinutesStr[0] != MinutesStrOld[0]:
                             # Animate 2 digit Minute Update
                             with canvas(self.device) as draw:
-                                self.__DrawNumber(draw, HoursStrOld, HoursStr, HHoursPosoursPos, HoursPos, 0)
+                                self.__DrawNumber(draw, HoursStrOld, HoursStr, HoursPos, HoursPos, 0)
                                 self.__DrawColon(draw, ":" if toggle else " ", " ", 0)
                                 self.__DrawNumber(draw, MinutesStrOld, MinutesStr, 17, 17, i)
                         else:
