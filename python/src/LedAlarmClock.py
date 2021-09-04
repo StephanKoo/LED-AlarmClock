@@ -15,6 +15,7 @@ print ("LedAlarmClock.py gestartet um "+time.strftime("%d.%m.%Y %H:%M:%S"))
 
 def signal_term_handler(sig, frame):
     MasterProgram.closeFast()
+    sleep(1)
     sys.exit(0)
 
 MasterProgram.clock = BaseClock.BaseClock()
