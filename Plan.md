@@ -4,7 +4,7 @@
 
 * [x] Uhr automatisch beim Start des Rasperry Pi starten
 * [x] Programm mit kill sauber beenden können
-* [x] IP-Adresse beim anmachen ausgeben (Entwicklungs-Feature)
+* [x] Die IP-Adresse wird jede Minute auf dem Display ausgegeben (Entwicklungs-Feature)
 
 ## v0.3
 
