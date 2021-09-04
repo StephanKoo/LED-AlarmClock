@@ -4,8 +4,6 @@
 
 * [x] Uhr automatisch beim Start des Rasperry Pi starten
 * [x] Programm mit kill sauber beenden können
-* [ ] Programm soll beim sudo poweroff sauber beenden
- * Hier soll systemd helfen. Noch rausfinden, wie.
 * [x] IP-Adresse beim anmachen ausgeben (Entwicklungs-Feature)
 
 ## v0.3
@@ -39,6 +37,7 @@
 * [ ] für den Wecker die erste relevante Zeit einstellen können (z.B. "7:30 Frühstück" oder "9:00 M37" (=Abfahrt mit dem Bus M37)). Das Gerät erkennt anhand der Konfiguration für "Früstück" und "M37", wann dann der Wecker klingeln muss.
 * [ ] Weckzeiten per Knöpfe einstellen können
 * [ ] Weckzeiten per http einstellen und kontrollieren können.
+* [ ] Programm soll beim sudo poweroff sauber beenden. Hier soll systemd helfen. Noch rausfinden, wie.
 
 # Version 3 oder so
 
