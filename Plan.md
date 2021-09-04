@@ -5,6 +5,7 @@
 * [x] Uhr automatisch beim Start des Rasperry Pi starten
 * [x] Programm mit kill sauber beenden können
 * [ ] Programm soll beim sudo poweroff sauber beenden
+ * Hier soll systemd helfen. Noch rausfinden, wie.
 * [x] IP-Adresse beim anmachen ausgeben (Entwicklungs-Feature)
 
 ## v0.3
