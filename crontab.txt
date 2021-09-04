@@ -4,7 +4,7 @@
 # than choose an editor (nano is the easiest to use)
 # than add the following line (you may adjust the pathes)
 
-@reboot cd /home/pi/LED-AlarmClock-prod/python/src ; python3 LedAlarmClock.py 2>&1 > /home/pi/LedAlarmClock.log &
+@reboot cd /home/pi/LED-AlarmClock/python/src ; python3 LedAlarmClock.py 2>&1 > /home/pi/LedAlarmClock.log &
 
 # leave the editor (nano: STRG-X, and follow command at bottom)
 # You should get the message
