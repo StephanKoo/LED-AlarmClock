@@ -8,9 +8,9 @@
 
 ## v0.3
 
-* [ ] Abdunklung der LEDs, damit es nachts nicht so hell ist. Die Anwesenheit der Abdunklung könnte als Erkennung Tag-/Nacht-Modus genutzt werden.
-
-
+* [X] Abdunklung der LEDs, damit es nachts nicht so hell ist.
+ * offen: Die Anwesenheit der Abdunklung als Erkennung für Tag-/Nacht-Modus nutzen.
+* [ ] Ohne Lüfter laufen lassen, aber mindestens warnen und am Besten sinnvoll reagieren, wenn die CPU zu warm wird
 * [ ] Knöpfe anschließen, um den Wecker damit auszuschalten
 * [ ] den Rasperry Pi per Knopf runterfahren können (`sudo poweroff`)
 
