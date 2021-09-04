@@ -8,7 +8,7 @@ else
 fi
 
 echo Wird jetzt Uhr starten
-python3 /home/pi/LED-AlarmClock-prod/python/src/LedAlarmClock.py & > /home/pi/LedAlarmClock.log
-                                                                  # Die Umleitung funktioniert nicht,
-                                                                  # vielleicht macht python das nicht
+python3 /home/pi/LED-AlarmClock/python/src/LedAlarmClock.py & > /home/pi/LedAlarmClock.log
+                                                              # Die Umleitung funktioniert nicht,
+                                                              # vielleicht macht python das nicht
 echo Uhr gestartet
